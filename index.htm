@@ -1,0 +1,276 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry ❤️</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  font-family:"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at top,#ffb6c9,transparent 40%),
+    linear-gradient(135deg,#ff4f81,#8e3157);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:white;
+}
+
+.hearts span{
+  position:fixed;
+  bottom:-60px;
+  font-size:25px;
+  pointer-events:none;
+  animation:floatHeart 8s linear infinite;
+  opacity:.8;
+}
+
+.hearts span:nth-child(1){left:5%;animation-delay:0s}
+.hearts span:nth-child(2){left:20%;animation-delay:2s;font-size:30px}
+.hearts span:nth-child(3){left:40%;animation-delay:4s}
+.hearts span:nth-child(4){left:60%;animation-delay:1s;font-size:35px}
+.hearts span:nth-child(5){left:80%;animation-delay:3s}
+.hearts span:nth-child(6){left:92%;animation-delay:5s}
+
+@keyframes floatHeart{
+  0%{transform:translateY(0) rotate(0);opacity:0}
+  20%{opacity:.8}
+  100%{transform:translateY(-110vh) rotate(360deg);opacity:0}
+}
+
+.card{
+  position:relative;
+  width:90%;
+  max-width:650px;
+  padding:45px 30px;
+  text-align:center;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:30px;
+  box-shadow:0 25px 60px rgba(0,0,0,.3);
+  z-index:5;
+  animation:cardAppear 1.2s ease;
+}
+
+@keyframes cardAppear{
+  from{opacity:0;transform:translateY(40px) scale(.95)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.big-heart{
+  font-size:75px;
+  display:inline-block;
+  animation:heartbeat 1.2s infinite;
+  margin-bottom:15px;
+}
+
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.2)}
+}
+
+h1{
+  font-size:42px;
+  margin-bottom:15px;
+  text-shadow:0 5px 20px rgba(0,0,0,.2)
+}
+
+h2{
+  font-size:23px;
+  font-weight:400;
+  margin-bottom:30px
+}
+
+.message{
+  font-size:18px;
+  line-height:1.9;
+  margin-bottom:20px
+}
+
+.message p{
+  margin-bottom:12px
+}
+
+button{
+  margin-top:15px;
+  border:none;
+  padding:15px 35px;
+  border-radius:50px;
+  background:white;
+  color:#e94473;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  transition:.3s
+}
+
+button:hover{
+  transform:scale(1.08)
+}
+
+button:active{
+  transform:scale(.95)
+}
+
+#finalMessage{
+  display:none;
+  margin-top:30px;
+  font-size:22px;
+  font-weight:bold;
+  animation:finalAppear 1s ease
+}
+
+@keyframes finalAppear{
+  from{opacity:0;transform:scale(.7)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@media(max-width:600px){
+  .card{padding:35px 20px}
+  h1{font-size:34px}
+  h2{font-size:20px}
+  .message{font-size:16px}
+  .big-heart{font-size:65px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts">
+  <span>❤️</span>
+  <span>💗</span>
+  <span>💕</span>
+  <span>💖</span>
+  <span>❤️</span>
+  <span>💞</span>
+</div>
+
+<div class="card">
+
+  <div class="big-heart">❤️</div>
+
+  <h1>I'm Sorry, My Love</h1>
+
+  <h2>To The Most Beautiful Thing In My Life ❤️</h2>
+
+  <div class="message">
+
+    <p>I know I messed up...</p>
+
+    <p>
+      And I'm truly sorry.
+      I never wanted to hurt you
+      or make you feel bad.
+    </p>
+
+    <p>
+      You are one of the most important
+      people in my life.
+    </p>
+
+    <p>
+      I can't change what happened,
+      but I can learn from it
+      and become better.
+    </p>
+
+    <p>
+      All I want is to see you smile again. ❤️
+    </p>
+
+  </div>
+
+  <button onclick="forgiveMe()">
+    Click if you forgive me ❤️
+  </button>
+
+  <div id="finalMessage">
+
+    🥺❤️
+
+    <br><br>
+
+    Thank you for giving me another chance.
+
+    <br>
+
+    I promise I'll do my best
+    to make you smile.
+
+    <br><br>
+
+    I love you ❤️
+
+  </div>
+
+</div>
+
+<script>
+
+function forgiveMe(){
+
+  document.getElementById("finalMessage").style.display="block";
+
+  for(let i=0;i<20;i++){
+
+    const heart=document.createElement("div");
+
+    heart.innerHTML="❤️";
+
+    heart.style.position="fixed";
+
+    heart.style.left=Math.random()*100+"%";
+
+    heart.style.bottom="-30px";
+
+    heart.style.fontSize=(15+Math.random()*30)+"px";
+
+    heart.style.zIndex="20";
+
+    heart.style.pointerEvents="none";
+
+    document.body.appendChild(heart);
+
+    const animation=heart.animate(
+
+      [
+        {
+          transform:"translateY(0) scale(1)",
+          opacity:1
+        },
+
+        {
+          transform:"translateY(-100vh) scale(1.5)",
+          opacity:0
+        }
+      ],
+
+      {
+        duration:2500+Math.random()*2000,
+        easing:"ease-out"
+      }
+
+    );
+
+    animation.onfinish=()=>{
+      heart.remove();
+    };
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
+```
