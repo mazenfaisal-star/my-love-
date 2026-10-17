@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,271 +5,498 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>I'm Sorry ❤️</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  min-height:100vh;
-  font-family:"Segoe UI",sans-serif;
-  background:
-    radial-gradient(circle at top,#ffb6c9,transparent 40%),
-    linear-gradient(135deg,#ff4f81,#8e3157);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  color:white;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.hearts span{
-  position:fixed;
-  bottom:-60px;
-  font-size:25px;
-  pointer-events:none;
-  animation:floatHeart 8s linear infinite;
-  opacity:.8;
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(
+        circle at top,
+        #ffe4ec,
+        #ffb6d0,
+        #ff8fab
+    );
+    color: #7a163c;
 }
 
-.hearts span:nth-child(1){left:5%;animation-delay:0s}
-.hearts span:nth-child(2){left:20%;animation-delay:2s;font-size:30px}
-.hearts span:nth-child(3){left:40%;animation-delay:4s}
-.hearts span:nth-child(4){left:60%;animation-delay:1s;font-size:35px}
-.hearts span:nth-child(5){left:80%;animation-delay:3s}
-.hearts span:nth-child(6){left:92%;animation-delay:5s}
-
-@keyframes floatHeart{
-  0%{transform:translateY(0) rotate(0);opacity:0}
-  20%{opacity:.8}
-  100%{transform:translateY(-110vh) rotate(360deg);opacity:0}
+.container {
+    width: 90%;
+    max-width: 500px;
+    padding: 35px 25px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 25px;
+    box-shadow: 0 10px 35px rgba(130, 20, 65, 0.2);
+    position: relative;
+    z-index: 2;
+    animation: appear 1.2s ease;
 }
 
-.card{
-  position:relative;
-  width:90%;
-  max-width:650px;
-  padding:45px 30px;
-  text-align:center;
-  background:rgba(255,255,255,.14);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,255,255,.3);
-  border-radius:30px;
-  box-shadow:0 25px 60px rgba(0,0,0,.3);
-  z-index:5;
-  animation:cardAppear 1.2s ease;
+/* لما تدوس Forgive Me الكارت بيختفي */
+.container.leaving {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+    pointer-events: none;
 }
 
-@keyframes cardAppear{
-  from{opacity:0;transform:translateY(40px) scale(.95)}
-  to{opacity:1;transform:translateY(0) scale(1)}
+h1 {
+    font-size: 2.3rem;
+    margin-bottom: 20px;
+    color: #b5174b;
 }
 
-.big-heart{
-  font-size:75px;
-  display:inline-block;
-  animation:heartbeat 1.2s infinite;
-  margin-bottom:15px;
+.heart {
+    font-size: 55px;
+    margin-bottom: 15px;
+    animation: heartbeat 1.4s infinite;
 }
 
-@keyframes heartbeat{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.2)}
+.message {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    margin-bottom: 25px;
 }
 
-h1{
-  font-size:42px;
-  margin-bottom:15px;
-  text-shadow:0 5px 20px rgba(0,0,0,.2)
+button {
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    background: #e63970;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(180, 20, 75, 0.2);
 }
 
-h2{
-  font-size:23px;
-  font-weight:400;
-  margin-bottom:30px
+button:hover {
+    transform: scale(1.07);
+    background: #c9184a;
 }
 
-.message{
-  font-size:18px;
-  line-height:1.9;
-  margin-bottom:20px
+.floating-heart {
+    position: fixed;
+    bottom: -50px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 25px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.message p{
-  margin-bottom:12px
+/* ===== المشهد الأسود: القلب المرسوم من الكلام ===== */
+#stage {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 20;
+    transition: opacity 1.4s ease, visibility 0s linear 1.4s;
 }
 
-button{
-  margin-top:15px;
-  border:none;
-  padding:15px 35px;
-  border-radius:50px;
-  background:white;
-  color:#e94473;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
-  transition:.3s
+#stage.show {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.4s ease;
 }
 
-button:hover{
-  transform:scale(1.08)
+#fx {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
-button:active{
-  transform:scale(.95)
+#loveText {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cinzel', 'Cormorant SC', Georgia, serif;
+    font-weight: 500;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    color: #ffe9f1;
+    text-shadow:
+        0 0 8px rgba(255, 170, 200, 0.95),
+        0 0 20px rgba(255, 79, 132, 0.9),
+        0 0 40px rgba(230, 57, 112, 0.8);
+    opacity: 0;
+    transition: opacity 2s ease;
+    pointer-events: none;
+    user-select: none;
 }
 
-#finalMessage{
-  display:none;
-  margin-top:30px;
-  font-size:22px;
-  font-weight:bold;
-  animation:finalAppear 1s ease
+#loveText.on {
+    opacity: 1;
 }
 
-@keyframes finalAppear{
-  from{opacity:0;transform:scale(.7)}
-  to{opacity:1;transform:scale(1)}
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.18);
+    }
 }
 
-@media(max-width:600px){
-  .card{padding:35px 20px}
-  h1{font-size:34px}
-  h2{font-size:20px}
-  .message{font-size:16px}
-  .big-heart{font-size:65px}
+@keyframes floatUp {
+    from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .message {
+        font-size: 1rem;
+    }
+
+    .container {
+        padding: 30px 20px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="hearts">
-  <span>❤️</span>
-  <span>💗</span>
-  <span>💕</span>
-  <span>💖</span>
-  <span>❤️</span>
-  <span>💞</span>
+<div class="container" id="card">
+    <div class="heart">❤️</div>
+
+    <h1>I'm Sorry, My Love</h1>
+
+    <div class="message">
+        My beautiful thing in my life ❤️
+        <br><br>
+        I know I may have hurt you, and that's the last thing
+        I ever wanted to do.
+        <br><br>
+        You mean so much to me, more than words can explain.
+        I never want a mistake or a misunderstanding to come
+        between us.
+        <br><br>
+        I'm truly sorry. I hope you can forgive me. ❤️
+    </div>
+
+    <button onclick="forgiveMe()">
+        Forgive Me? ❤️
+    </button>
 </div>
 
-<div class="card">
-
-  <div class="big-heart">❤️</div>
-
-  <h1>I'm Sorry, My Love</h1>
-
-  <h2>To The Most Beautiful Thing In My Life ❤️</h2>
-
-  <div class="message">
-
-    <p>I know I messed up...</p>
-
-    <p>
-      And I'm truly sorry.
-      I never wanted to hurt you
-      or make you feel bad.
-    </p>
-
-    <p>
-      You are one of the most important
-      people in my life.
-    </p>
-
-    <p>
-      I can't change what happened,
-      but I can learn from it
-      and become better.
-    </p>
-
-    <p>
-      All I want is to see you smile again. ❤️
-    </p>
-
-  </div>
-
-  <button onclick="forgiveMe()">
-    Click if you forgive me ❤️
-  </button>
-
-  <div id="finalMessage">
-
-    🥺❤️
-
-    <br><br>
-
-    Thank you for giving me another chance.
-
-    <br>
-
-    I promise I'll do my best
-    to make you smile.
-
-    <br><br>
-
-    I love you ❤️
-
-  </div>
-
+<!-- المشهد اللي بيظهر بعد Forgive Me -->
+<div id="stage">
+    <canvas id="fx"></canvas>
+    <div id="loveText">Love you.</div>
 </div>
 
 <script>
+/* ============ إعدادات سهلة التعديل ============ */
+const HEART_WORDS = "I LOVE YOU";   // الكلمة اللي بتتكرر جوه القلب
+const CENTER_TEXT = "Love you.";    // الكلام اللي في نص القلب
+const DRAW_DELAY  = 1.3;            // ثواني قبل ما القلب يبدأ يترسم
+const DRAW_TIME   = 7;              // مدة رسم القلب بالثواني
+/* ============================================== */
 
-function forgiveMe(){
+/* ---------- القلوب الطايرة في الصفحة الأولى ---------- */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-heart");
 
-  document.getElementById("finalMessage").style.display="block";
+    const hearts = ["❤️", "💕", "💗", "💖", "💘"];
+    heart.innerHTML = hearts[
+        Math.floor(Math.random() * hearts.length)
+    ];
 
-  for(let i=0;i<20;i++){
-
-    const heart=document.createElement("div");
-
-    heart.innerHTML="❤️";
-
-    heart.style.position="fixed";
-
-    heart.style.left=Math.random()*100+"%";
-
-    heart.style.bottom="-30px";
-
-    heart.style.fontSize=(15+Math.random()*30)+"px";
-
-    heart.style.zIndex="20";
-
-    heart.style.pointerEvents="none";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 25) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 5) + "s";
 
     document.body.appendChild(heart);
 
-    const animation=heart.animate(
-
-      [
-        {
-          transform:"translateY(0) scale(1)",
-          opacity:1
-        },
-
-        {
-          transform:"translateY(-100vh) scale(1.5)",
-          opacity:0
-        }
-      ],
-
-      {
-        duration:2500+Math.random()*2000,
-        easing:"ease-out"
-      }
-
-    );
-
-    animation.onfinish=()=>{
-      heart.remove();
-    };
-
-  }
-
+    setTimeout(() => {
+        heart.remove();
+    }, 9000);
 }
 
+const heartTimer = setInterval(createHeart, 350);
+
+/* ---------- الانتقال بعد الضغط على Forgive Me ---------- */
+let started = false;
+
+function forgiveMe() {
+    if (started) return;
+    started = true;
+
+    // انفجار قلوب صغير
+    for (let i = 0; i < 25; i++) {
+        setTimeout(createHeart, i * 80);
+    }
+    clearInterval(heartTimer);
+
+    // الكارت يختفي
+    document.getElementById("card").classList.add("leaving");
+
+    // الموقع يتحول للمشهد الأسود
+    setTimeout(() => {
+        document.getElementById("stage").classList.add("show");
+        startFx();
+    }, 900);
+}
+
+/* ---------- أنيميشن القلب ---------- */
+const canvas = document.getElementById("fx");
+const ctx = canvas.getContext("2d");
+const loveText = document.getElementById("loveText");
+
+const layer = document.createElement("canvas");     // القلب (خط + كلام)
+const lctx = layer.getContext("2d");
+const pattern = document.createElement("canvas");   // صفحة الكلام الصغير
+const pctx = pattern.getContext("2d");
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, s = 10, lw = 36;
+let pts = [];
+let particles = [];
+let t0 = 0;
+let running = false;
+
+const N = 520;
+
+function heartPoint(t) {
+    const x = 16 * Math.pow(Math.sin(t), 3);
+    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t)
+            - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+    return [cx + x * s, cy - (y + 2.5) * s];
+}
+
+function layout() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+
+    [canvas, layer, pattern].forEach(c => {
+        c.width = Math.round(W * dpr);
+        c.height = Math.round(H * dpr);
+    });
+
+    s = Math.min(W * 0.023, H * 0.0231, 22);
+    lw = 3.6 * s;
+    cx = W / 2;
+    cy = H / 2;
+
+    pts = [];
+    for (let i = 0; i <= N; i++) {
+        pts.push(heartPoint(i / N * Math.PI * 2));
+    }
+
+    buildPattern();
+
+    // مكان الكلمة اللي في النص
+    loveText.style.fontSize = (2.4 * s) + "px";
+    loveText.style.left = cx + "px";
+    loveText.style.top = (cy - 2.2 * s) + "px";
+}
+
+// صفحة مليانة كلمة "I LOVE YOU" صغيرة (بتظهر بس جوه خط القلب)
+function buildPattern() {
+    pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    pctx.clearRect(0, 0, W, H);
+
+    const fs = Math.max(6, 0.62 * s);
+    const lh = 0.8 * s;
+    pctx.font = "bold " + fs + "px Georgia, serif";
+    pctx.textBaseline = "middle";
+
+    const colors = ["#fff0f5", "#ffd9e4", "#ffc4d6", "#ffe7a3", "#ffffff"];
+    const left = cx - 19 * s;
+    const right = cx + 19 * s;
+    const top = cy - 15 * s;
+    const bottom = cy + 17 * s;
+    const space = fs * 0.5;
+
+    for (let y = top; y < bottom; y += lh) {
+        let x = left - Math.random() * fs * 4;
+        while (x < right) {
+            pctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+            pctx.fillText(HEART_WORDS, x, y);
+            x += pctx.measureText(HEART_WORDS).width + space;
+        }
+    }
+}
+
+/* قلوب صغيرة حمرا طايرة */
+function makeParticle(anywhere) {
+    return {
+        x: Math.random() * W,
+        y: anywhere ? Math.random() * H : H + 20,
+        r: 2.6 + Math.random() * 3.4,
+        vy: 8 + Math.random() * 18,
+        sway: 6 + Math.random() * 16,
+        ph: Math.random() * 6.28,
+        sp: 0.4 + Math.random() * 0.9,
+        a: 0.45 + Math.random() * 0.5,
+        gold: Math.random() < 0.3
+    };
+}
+
+function heartShape(c, x, y, r) {
+    c.beginPath();
+    c.moveTo(x, y + r * 0.95);
+    c.bezierCurveTo(x - r * 1.7, y - r * 0.15, x - r * 0.85, y - r * 1.4, x, y - r * 0.45);
+    c.bezierCurveTo(x + r * 0.85, y - r * 1.4, x + r * 1.7, y - r * 0.15, x, y + r * 0.95);
+    c.closePath();
+}
+
+function strokeUpTo(c, count, width) {
+    c.beginPath();
+    c.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i <= count; i++) {
+        c.lineTo(pts[i][0], pts[i][1]);
+    }
+    c.lineWidth = width;
+    c.lineCap = "round";
+    c.lineJoin = "round";
+    c.stroke();
+}
+
+const easeInOut = x => 0.5 - 0.5 * Math.cos(Math.PI * Math.min(Math.max(x, 0), 1));
+
+let last = 0;
+
+function frame(now) {
+    if (!running) return;
+
+    const t = (now - t0) / 1000;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+
+    const p = reduceMotion ? 1 : easeInOut((t - DRAW_DELAY) / DRAW_TIME);
+    const count = Math.floor(p * N);
+    const pulse = p >= 1 ? 1 + 0.014 * Math.sin((t - DRAW_DELAY - DRAW_TIME) * 2.4) : 1;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    // --- القلوب الطايرة ---
+    for (const q of particles) {
+        q.y -= q.vy * dt;
+        q.ph += q.sp * dt;
+        if (q.y < -20) Object.assign(q, makeParticle(false));
+        const x = q.x + Math.sin(q.ph) * q.sway;
+
+        const g = ctx.createRadialGradient(x, q.y, 0, x, q.y, q.r * 3.2);
+        g.addColorStop(0, "rgba(255,45,85," + (q.a * 0.35) + ")");
+        g.addColorStop(1, "rgba(255,45,85,0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(x - q.r * 3.2, q.y - q.r * 3.2, q.r * 6.4, q.r * 6.4);
+
+        heartShape(ctx, x, q.y, q.r);
+        ctx.globalAlpha = q.a;
+        ctx.fillStyle = "#e8244f";
+        ctx.fill();
+        if (q.gold) {
+            ctx.lineWidth = 0.9;
+            ctx.strokeStyle = "#ffb04a";
+            ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+    }
+
+    // --- القلب ---
+    if (count > 1) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.scale(pulse, pulse);
+        ctx.translate(-cx, -cy);
+
+        // توهج
+        ctx.strokeStyle = "rgba(255,79,132,0.07)";
+        strokeUpTo(ctx, count, lw + 2.8 * s);
+        ctx.strokeStyle = "rgba(255,79,132,0.10)";
+        strokeUpTo(ctx, count, lw + 1.3 * s);
+
+        // الخط الوردي + الكلام الصغير فوقه
+        lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        lctx.globalCompositeOperation = "source-over";
+        lctx.clearRect(0, 0, W, H);
+        lctx.strokeStyle = "#e9507c";
+        strokeUpTo(lctx, count, lw);
+        lctx.globalCompositeOperation = "source-atop";
+        lctx.setTransform(1, 0, 0, 1, 0, 0);
+        lctx.globalAlpha = 0.95;
+        lctx.drawImage(pattern, 0, 0);
+        lctx.globalAlpha = 1;
+        lctx.globalCompositeOperation = "source-over";
+
+        ctx.drawImage(layer, 0, 0, W, H);
+        ctx.restore();
+    }
+
+    // الكلمة اللي في النص تظهر بعد ما القلب يبدأ يترسم
+    if (t > DRAW_DELAY + 1.6) loveText.classList.add("on");
+
+    requestAnimationFrame(frame);
+}
+
+function startFx() {
+    layout();
+    particles = [];
+    for (let i = 0; i < 55; i++) particles.push(makeParticle(true));
+
+    t0 = performance.now();
+    last = t0;
+    running = true;
+    requestAnimationFrame(frame);
+}
+
+window.addEventListener("resize", () => {
+    if (running) layout();
+});
 </script>
 
 </body>
 </html>
-```
